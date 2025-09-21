@@ -1417,23 +1417,33 @@
         }
     </script>
  
-<!-- Firebase Authentication Script -->
+  <!-- Firebase App (core SDK) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<!-- Firebase Authentication -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<!-- (Optional) Analytics -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+
 <script>
-  // Firebase Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBV01v57xGKUy-vUmVZw2vzHQa6FPBayHI",
-    authDomain: "imarikaweb.firebaseapp.com",
-    projectId: "imarikaweb",
-    storageBucket: "imarikaweb.firebasestorage.app",
-    messagingSenderId: "683019239334",
-    appId: "1:683019239334:web:37212f42f75d23aec81967",
-    measurementId: "G-6PJXZWQ6NE"
-  };
+  // ✅ Your Firebase config
+  
+const firebaseConfig = {
+  apiKey: "AIzaSyBtx-D3nbl1lKOhCzEixDZRgRDM4NbtOBE",
+  authDomain: "swiftauth-5fcb5.firebaseapp.com",
+  projectId: "swiftauth-5fcb5",
+  storageBucket: "swiftauth-5fcb5.firebasestorage.app",
+  messagingSenderId: "990160652137",
+  appId: "1:990160652137:web:abac238567edfdb5671ff8",
+  measurementId: "G-5C1DS28B5S"
+};
+
+
 
   // ✅ Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 
-  // ✅ Check authentication and session age
+  // ✅ Authentication check
   firebase.auth().onAuthStateChanged(user => {
     const loginKey = "imarika_last_login";
     const lastLogin = localStorage.getItem(loginKey);
@@ -1449,9 +1459,10 @@
       });
     } else {
       localStorage.setItem(loginKey, now.toString());
-      updateAuthUI?.(user); // Only if defined elsewhere
+      updateAuthUI?.(user); // Optional hook
     }
   });
+</script>
 
     </script>
 </body>
