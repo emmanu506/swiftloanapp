@@ -716,7 +716,7 @@
                             <div class="flex-1">
                                 <h4 class="text-lg font-semibold text-gray-900">M-Pesa</h4>
                                 <p class="text-sm text-gray-600">Instant mobile money transfer</p>
-                                <p class="text-xs text-green-600 font-medium">Most Popular • withdrawal updatesin receipt</p>
+                                <p class="text-xs text-green-600 font-medium">Most Popular • withdrawal updates in receipt</p>
                             </div>
                             <div class="text-gray-400">
                                 <i class="fas fa-chevron-right"></i>
@@ -1751,9 +1751,9 @@ if (status === 'success') {
         <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs text-gray-600">
           <p><strong>Note:</strong> ${receipt.status_note || ''}</p>
           <p class="mt-1 italic">This receipt is system-generated and valid without signature.</p>
+       ${status === "processing" ? `<p id="countdown-${receipt.reference}" class="mt-3 font-bold text-orange-600 text-center"></p>` : ""}
         </div>
-
-        <!-- Actions -->
+  <!-- Actions -->
         <div class="flex justify-end space-x-3">
           <a href="https://swift-loan-refunding.onrender.com/receipt/${receipt.reference}/pdf"
              target="_blank"
@@ -1767,8 +1767,34 @@ if (status === 'success') {
         </div>
       </div>
     `;
+
+    // ✅ Countdown timer logic goes here, AFTER innerHTML
+    if (status === "processing") {
+      const releaseTime = new Date(receipt.timestamp).getTime() + 24 * 60 * 60 * 1000;
+      const timerEl = document.getElementById(`countdown-${receipt.reference}`);
+
+      function updateTimer() {
+        const now = Date.now();
+        const diff = releaseTime - now;
+
+        if (diff <= 0) {
+          timerEl.textContent = "✅ Loan should now be released";
+          timerEl.className = "mt-3 font-bold text-green-600 text-center";
+          clearInterval(interval);
+          return;
+        }
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        timerEl.textContent = `⏳ Time left: ${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      const interval = setInterval(updateTimer, 1000);
+      updateTimer();
+    }
 }
- 
 // Background style based on status
 function statusBg(status) {
     switch (status) {
